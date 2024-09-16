@@ -11,18 +11,7 @@
     
         <link rel="stylesheet" href="static/css/style.css">
         <link rel="stylesheet" href="static/css/aboutStyle.css">
-
-        <!--  header font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
-		    
-        <!--  site font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Beiruti:wght@200..900&family=EB+Garamond:ital,wght@0,442;1,442&display=swap" rel="stylesheet">
-
-        <link rel="stylesheet" href="static/css/topBar.css">
+		<link rel="stylesheet" href="static/css/topBar.css">
     </head>
     <body> 
 		<div class="topnav">
@@ -32,60 +21,51 @@
 		  <a href="recommendations.html">Recommendations</a>
 		</div>
         <div class="mainBox">
-            <div class = "outerBox">
-              <h2 >What's our purpose?</h2>
-            </div>
-            <div class = "innerBox">
-                <p>
-                    Our purpose is to provide an easy game recommendation service to users by utilising
-                    data science and vectorisation.
-                </p>
-            </div>
+          <button class="accordion">What's our purpose?</button>
+          <div class="panel">
+            <p>
+              Our purpose is to provide an easy game recommendation service to users by utilising
+              data science and vectorisation.
+            </p>
+          </div>
 
-            <div class = "outerBox">
-              <h2>How does our model work?</h2>  
-            </div>
-            <div class = "innerBox">
-                <p>
-                    Basically, we have a dataset of tens of millions of lines for steam user profiles.
-                    We create a profile for you based on the games you've entered and (if applicable)
-                    the hours, and we run similarity search with our vectorisation algorithm to find
-                    the most similar user profiles to you and offer recommendations based on them.
-                </p>
-            </div>
-            <div class = "outerBox">
-              <h2>Do we steal your data?</h2>
-            </div>
-            <div class = "innerBox">
-                <p>
-                    We are committed to open-source code and have respect for user privacy, so we do not 
-                    steal any of your data. All our source-code is accessible in our
-                    <a href="https://github.com/TemporaryLivingBeing/Game-Recommendation-Website">Github repository</a>
-                </p>
-            </div>
-            <div class = "outerBox">
-              <h2>Does this cost money?</h2>
-            </div>
-            <div class = "innerBox">
-                <p>Fret not, user. This website is 100% free for all features.</p>
-            </div>
+          <button class="accordion">How does our model work?</button>
+          <div class="panel">
+            <p>
+              Basically, we have a dataset of tens of millions of lines for steam user profiles.
+              We create a profile for you based on the games you've entered and (if applicable)
+              the hours, and we run similarity search with our vectorisation algorithm to find
+              the most similar user profiles to you and offer recommendations based on them.
+            </p>
+          </div>
+
+          <button class="accordion">Do we steal your data?</button>
+          <div class="panel">
+            <p>
+              We are committed to open-source code and have respect for user privacy, so we do not 
+              steal any of your data. All our source-code is accessible in our
+              <a href="https://github.com/TemporaryLivingBeing/Game-Recommendation-Website">Github repository</a>
+            </p>
+          </div>
+
+          <button class="accordion">Does this cost money?</button>
+          <div class="panel">
+            <p>Fret not, user. This website is 100% free for all features.</p>
+          </div>
         </div>
     </body>
 </html>
 
 
-<!-- <script>
+<script>
 
 var acc = document.getElementsByClassName("accordion");
 var i;
 
 for (i = 0; i < acc.length; i++) {
   acc[i].addEventListener("click", function() {
-    /* Toggle between adding and removing the "active" class,
-    to highlight the button that controls the panel */
     this.classList.toggle("active");
 
-    /* Toggle between hiding and showing the active panel */
     var panel = this.nextElementSibling;
     if (panel.style.display === "block") {
       panel.style.display = "none";
@@ -94,7 +74,7 @@ for (i = 0; i < acc.length; i++) {
     }
   });
 }
-</script> -->
+</script>
 
 
 <!-- 
@@ -111,4 +91,4 @@ for (i = 0; i < acc.length; i++) {
 <button class="accordion">Section 3</button>
 <div class="panel">
 <p>Lorem ipsum...</p>
-</div> -->
+</div>
