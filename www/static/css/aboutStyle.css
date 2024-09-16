@@ -25,7 +25,7 @@ h1, h2, h3, h4, h5, h6{
     /* box-shadow: 0 0 50px 10px #fdd660; */
     height: auto;
 }
-.outterBox{
+.outerBox{
     background-color: #0A21C0;
     border-radius: 70px;
     padding: 1px;
