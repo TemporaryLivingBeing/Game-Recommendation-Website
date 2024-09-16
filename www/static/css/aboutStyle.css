@@ -1,0 +1,45 @@
+*{
+    font-family: "Beiruti", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+p{
+    font-size: 17px;
+}
+html{
+    background-color: #141619;
+}
+h1, h2, h3, h4, h5, h6{
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 400;
+}
+.mainBox {
+      background-color: #B3B4BD;
+      border-radius: 30px;
+      padding: 10px;
+      margin: 20px 30px;
+    border: solid 20px #0A21C0;
+    /* box-shadow: 0 0 50px 10px #fdd660; */
+    height: auto;
+}
+.outerBox{
+    background-color: #0A21C0;
+    border-radius: 70px;
+    padding: 1px;
+    margin: 5px;
+    color: #eceeff;
+    border: solid 3px black;
+
+}
+.innerBox{
+    background-color: #B3B4BD;
+    color: black;
+    margin: 16px;
+} 
+
+h2 {
+    margin: 5px;
+}
