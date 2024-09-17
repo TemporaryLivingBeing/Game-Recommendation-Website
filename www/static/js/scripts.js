@@ -4,4 +4,3 @@ function toggleDarkMode() {
 }
 
 document.addEventListener("DOMContentLoaded", autoSwitchMode);
-

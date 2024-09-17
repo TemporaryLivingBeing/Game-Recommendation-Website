@@ -2,6 +2,29 @@ body{
     padding:0% 3% 10% 3%;
     text-align:center;
 }
+
+@media screen and (max-width: 700px){
+    .show-menu {
+    display:block;
+    }
+}
+
+.show-menu {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-decoration: none;
+    color: #fff;
+    background: #19c589;
+    text-align: center;
+    padding: 10px 0;
+    display: none;
+}
+input[type=checkbox]{
+    display: none;
+}
+input[type=checkbox]:checked ~ #menu{
+    display: block;
+}
+
 h1{
     color: #32a852;
     margin-top:30px;
@@ -20,3 +43,28 @@ h1{
     font-size: 16px; 
     font-weight: bold;
 }
+
+.topnav {
+    background-color: gray;
+    display: flex;
+  }
+  
+  .topnav a {
+  
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 18px;
+    flex: 1;
+    display: block;
+  }
+  
+  .topnav a:hover {
+    background-color: green;
+    color: black;
+  }
+  
+  .topnav a.active {
+    background-color: blue;
+    color: white;
+  }
