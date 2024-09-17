@@ -3,27 +3,29 @@ body{
     text-align:center;
 }
 
-@media screen and (max-width: 700px){
-    .show-menu {
-    display:block;
+/* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+@media screen and (max-width: 600px) {
+    .topnav a:not(:first-child) {display: none;}
+    .topnav a.icon {
+      float: right;
+      display: block;
     }
-}
-
-.show-menu {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-decoration: none;
-    color: #fff;
-    background: #19c589;
-    text-align: center;
-    padding: 10px 0;
-    display: none;
-}
-input[type=checkbox]{
-    display: none;
-}
-input[type=checkbox]:checked ~ #menu{
-    display: block;
-}
+  }
+  
+  /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+  @media screen and (max-width: 600px) {
+    .topnav.responsive {position: relative;}
+    .topnav.responsive a.icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .topnav.responsive a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+  }
 
 h1{
     color: #32a852;
@@ -67,4 +69,8 @@ h1{
   .topnav a.active {
     background-color: blue;
     color: white;
+  }
+
+  .topnav .icon {
+    display: none;
   }
