@@ -1,7 +1,10 @@
 function toggleDarkMode() {
     let element = document.body;
     element.classList.toggle("dark");
-}
+
+    let contactBox = document.querySelector(".contact-us-box");
+    contactBox.classList.toggle("dark");
+  }
 
 document.addEventListener("DOMContentLoaded", autoSwitchMode);
 
