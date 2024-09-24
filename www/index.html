@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index page</title>
+    <title>Game Fetch</title>
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/css/topBar.css">
     <script src="static/js/scripts.js"></script>
+    <script src="https://kit.fontawesome.com/7ef1811b92.js" crossorigin="anonymous"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,12 +20,20 @@
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
         <a href="recommendations.html">Recommendations</a>
+        <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
         <a href="javascript:void(0);" class="icon" onclick="hamburger()">
             <i class="fa fa-bars"></i>
         </a>
     </div>
 
-    <h1>Welcome to our index page</h1>
+    <h1 id = "title">Game Fetch</h1>
+        <div id = "searchBar">
+            <input type = "text" placeholder="Game Search"> <!-- made using https://www.w3schools.com/howto/howto_css_searchbar.asp -->
+            <button class = "seachButton"> <i class="fa-solid fa-magnifying-glass"></i> </button> 
+            <button class = "seachButton"> <i class="fa-solid fa-list"></i> </button>
+        </div>
+    <br>
+    <br>
     <button class="darkButton" onclick="toggleDarkMode()">Dark mode</button>
     <p>Cat.</p>
     <a href="https://cs.furman.edu">Visit Furman CS</a>
