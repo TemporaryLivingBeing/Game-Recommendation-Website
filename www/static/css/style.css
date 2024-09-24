@@ -25,6 +25,8 @@ h1 {
 .topnav {
   background-color: gray;
   overflow: hidden;
+  /* display: flex;
+  justify-content: flex-start; */
 }
 
 .topnav a {
@@ -51,6 +53,12 @@ h1 {
   display: none;
 }
 
+.topnav img#logo {
+  max-height: 45px; 
+  width: auto;       
+  justify-content: space-between;
+}
+
 @media screen and (max-width: 600px) {
   .topnav a:not(:first-child) {display: none;}
   .topnav a.icon {
@@ -71,4 +79,31 @@ h1 {
       display: block;
       text-align: left;
   }
+}
+
+input[type=text] {
+  /* padding: 5px; */
+  border: 1px solid black;
+  width: auto;
+  /* margin-top: 8px;
+  margin-right: 16px; */
+  font-size: xx-large;
+}
+
+#searchBar {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+#title{
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#logo{
+  justify-content: center;
+  height: fit-content;
+  width: fit-content;
 }
