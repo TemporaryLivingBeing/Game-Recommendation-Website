@@ -16,3 +16,15 @@ function hamburger() {
           x.className = "topnav";
       }
   }
+
+  function openPop() {
+    const popupDialogue =
+        document.getElementById(
+            "popupDialogue"
+        );
+    popupDialogue.style.visibility =
+        popupDialogue.style.visibility ===
+            "visible"
+            ? "hidden"
+            : "visible"
+}
