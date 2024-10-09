@@ -1,10 +1,10 @@
 .contactButton {
-cursor: pointer;
-border: 1px solid;
-border-radius: 25px; 
-padding: 10px 20px; 
-font-size: 16px; 
-font-weight: bold;
+  cursor: pointer;
+  border: 1px solid;
+  border-radius: 25px; 
+  padding: 10px 20px; 
+  font-size: 16px; 
+  font-weight: bold;
 }
 
 .contact-us-box .btn {
@@ -37,47 +37,47 @@ font-weight: bold;
     margin: 0 auto;
   }
   
-  .contact-us-box.dark {
-    background-color: #333;
-    color: #f2f2f2;
-  }
-  
-  .contact-us-box form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .contact-us-box label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .contact-us-box input,
-  .contact-us-box textarea {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  .contact-us-box button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .contact-us-box button:hover {
-    background-color: #45a049;
-  }
+.contact-us-box.dark {
+  background-color: #333;
+  color: #f2f2f2;
+}
 
-  .close {
-    cursor: pointer;
-    position: relative;
-    top: 50%;
-    right: 0%;
-    padding: 12px 16px;
-  }
+.contact-us-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-us-box label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.contact-us-box input,
+.contact-us-box textarea {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.contact-us-box button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.contact-us-box button:hover {
+  background-color: #45a049;
+}
+
+.close {
+  cursor: pointer;
+  position: relative;
+  top: 50%;
+  right: 0%;
+  padding: 12px 16px;
+}

@@ -17,7 +17,8 @@ function hamburger() {
       }
   }
 
-  function openPop() {
+  function openPop() {             /* popup https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/-->> */
+
     const popupDialogue =
         document.getElementById(
             "popupDialogue"
