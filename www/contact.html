@@ -16,12 +16,13 @@
     </head>
     <body>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
+        
         <div class="topnav" id="myTopnav">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="contact.html" class="active">Contact</a>
             <a href="recommendations.html">Recommendations</a>
-            <img src="static/img/Game_Fetch_Logo.png" id = "logo"/>
             <a href="javascript:void(0);" class="icon" onclick="hamburger()">
                 <i class="fa fa-bars"></i>
             </a>
@@ -33,7 +34,7 @@
         <br></br>
         <div class="contact-us-box" id="contactForm">
             <form>
-                <label for="name">Name: <span class="close">x </span></label>
+                <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required> 
         
                 <label for="email">Email:</label>
@@ -43,7 +44,7 @@
                 <textarea id="message" name="message" required></textarea>
         
                 <button type="submit" class="btn">Send</button>
-                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                <button type="button" class="cancel" onclick="closeForm()">Close</button>
             </form>
         </div>
     </body>
@@ -53,7 +54,7 @@
     function toggleContact() {
         var form = document.getElementById("contactForm");
         if (form.style.display == "none"){
-            form.style.display = "block";
+            form.style.display = "flex";
         } 
         else {
             form.style.display = "none";

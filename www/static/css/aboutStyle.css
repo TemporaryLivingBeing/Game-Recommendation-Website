@@ -44,7 +44,7 @@ h1, h2 {
 h2 {
     margin: 5px;
 }
-.accordion {
+.accordion { /* inspired by https://www.w3schools.com/howto/howto_js_accordion.asp */
     background-color: #eee;
     color: #444;
     cursor: pointer;
