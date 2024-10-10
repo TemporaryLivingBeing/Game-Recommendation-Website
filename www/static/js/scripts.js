@@ -4,9 +4,14 @@ function toggleDarkMode() {
 
     let contactBox = document.querySelector(".contact-us-box");
     contactBox.classList.toggle("dark");
-  }
 
-document.addEventListener("DOMContentLoaded", autoSwitchMode);
+
+    let contactBoxButton = contactBox.querySelector("button");
+    contactBoxButton.classList.toggle("dark");
+
+    let closeButton = contactBox.querySelector(".contact-us-box button.cancel");
+    closeButton.classList.toggle("dark");
+  }
 
 function hamburger() {
       var x = document.getElementById("myTopnav");
@@ -16,3 +21,15 @@ function hamburger() {
           x.className = "topnav";
       }
   }
+
+function openPop() {
+    const popDialogue =
+        document.getElementById(
+            "popupDialogue"
+        );
+    popDialogue.style.visibility =
+        popDialogue.style.visibility ===
+            "visible"
+            ? "hidden"
+            : "visible";
+}

@@ -15,29 +15,69 @@
 </head>
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
+
+
     <div class="topnav" id="myTopnav">
         <a href="index.html" class="active">Home</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
         <a href="recommendations.html">Recommendations</a>
-        <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
         <a href="javascript:void(0);" class="icon" onclick="hamburger()">
             <i class="fa fa-bars"></i>
         </a>
     </div>
 
     <h1 id = "title">Game Fetch</h1>
+        <div id = "subtitle">
+            <h3>Welcome to Game Fetch, we find games catered to your tastes! </h3>
+            <p> 
+                Game Fetch is a steam game recommendation website that makes finding games you love easy:
+                Enter a game you love, filter based upon steam tags, online player base, or rating, 
+                and get back games you’ll love!
+            </p>
+        </div>
         <div id = "searchBar">
             <input type = "text" placeholder="Game Search"> <!-- made using https://www.w3schools.com/howto/howto_css_searchbar.asp -->
-            <button class = "seachButton"> <i class="fa-solid fa-magnifying-glass"></i> </button> 
-            <button class = "seachButton"> <i class="fa-solid fa-list"></i> </button>
+            <button class = "seachButton" id = "base_search" onclick = "window.location.href='recommendations.html'">
+                <i class="fa-solid fa-magnifying-glass"></i>  <!-- got the onclick for button from here https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
+            </button>  
+            <button class = "seachButton" id = "filter" onclick = "openPop()"> <i class="fa-solid fa-list"></i> </button>
+            <!-- popup implementation https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/ -->
+            <div id="popupDialogue">
+                <p>
+                    <lable>Popular Tags: </lable>
+                    <select name="gameTags" id="gameTagsPopup"> <!--made using https://www.w3schools.com/tags/tag_select.asp-->
+                        <option value="indie">indie</option>
+                        <option value="action">action</option>
+                        <option value="adventure">adventure</option>
+                        <option value="casual">casual</option>
+                        <option value="RPG">RPG</option>
+                    </select>
+                </p>
+                <p>
+                    <lable>Minimum Rating (out of 5): </lable><input type="number" min="0" max = "5" step=".1"> <!--made using https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number#-->
+                </p>
+                <p>
+                    <lable>Minimum Active Player Base: </lable><input type="number" min="0">
+                </p>
+
+                <p>
+                    <button onclick = "window.location.href='recommendations.html'">
+                        Search
+                    </button>
+                    <button onclick="openPop()">
+                        Close
+                    </button>
+                </p>
+            </div>
         </div>
-    <br>
-    <br>
-    <button class="darkButton" onclick="toggleDarkMode()">Dark mode</button>
-    <p>Cat.</p>
-    <a href="https://cs.furman.edu">Visit Furman CS</a>
-    <br><br>
+    <p>
+        <button class="darkButton" onclick="toggleDarkMode()">Dark mode</button>
+    </p>
+    <p>
+        <a href="https://cs.furman.edu">Visit Furman CS</a>
+    </p>
 
 </body>
 
@@ -45,8 +85,8 @@
 </html>
 
 
-<select name="choice">
+<!-- <select name="choice">
     <option value="first">First Group</option>
     <option value="second" selected>Second Group</option>
     <option value="third">Third Group</option>
-  </select>
+  </select> -->
