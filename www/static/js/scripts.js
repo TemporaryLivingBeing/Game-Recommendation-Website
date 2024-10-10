@@ -13,8 +13,6 @@ function toggleDarkMode() {
     closeButton.classList.toggle("dark");
   }
 
-document.addEventListener("DOMContentLoaded", autoSwitchMode);
-
 function hamburger() {
       var x = document.getElementById("myTopnav");
       if (x.className === "topnav") {
