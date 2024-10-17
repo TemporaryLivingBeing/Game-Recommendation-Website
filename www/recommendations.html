@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Owned Games</title>
+    <link rel="stylesheet" href="static/css/recommendation-styles.css">
+            
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/aboutStyle.css">
+    <link rel="stylesheet" href="static/css/topBar.css">
+    <script src="static/js/scripts.js"></script>
+</head>
+<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
+
+
+    <div class="topnav" id="myTopnav">
+      <a href="index.html" >Home</a>
+      <a href="about.html" >About</a>
+      <a href="contact.html">Contact</a>
+      <a href="recommendations.html" class="active">Recommendations</a>
+      <a href="javascript:void(0);" class="icon" onclick="hamburger()">
+          <i class="fa fa-bars"></i>
+      </a>
+  </div>
+
+    <main class="page-content">
+        <h1>Your Game Recommendations</h1>
+        <button id="fetchData" onclick="fetchAndDisplayGames()" class="btn">Fetch Games</button>
+        <button class="darkButton" onclick="toggleDarkMode()">Dark mode (not implemented yet)</button>
+        <div id="gamesContainer"></div>
+    </main>
+        
+</body>
+</html>
+
+
+<script>
+    function fetchAndDisplayGames() {
+        fetch('http://127.0.0.1:5000/get_data')
+            .then(getResponse)
+            .then(getData);
+    }
+
+    function getResponse(response) {
+        return response.json();
+    }
+
+    function getData(data) {
+        const container = document.getElementById('gamesContainer');
+        container.innerHTML = createGameTimeline(data.response.games);
+    }
+
+    function createGameTimeline(games) {
+        let html = '';
+        for (let i = 0; i < games.length; i++) {
+            const game = games[i];
+            let sectionClass = 'timeline-section';
+            if (i % 2 === 0) {
+                sectionClass += ' left';
+            } else {
+                sectionClass += ' right';
+            }
+
+            html += `
+                <section class="${sectionClass}">
+                    <div class="content">
+                        <h2>${game.name}</h2>
+                        <p>AppID: ${game.appid}</p>
+                        <p>Playtime: ${Math.floor(game.playtime_forever / 60)} hours</p>
+                        <a href="https://store.steampowered.com/app/${game.appid}" class="btn" target="_blank">View in Store</a>
+                    </div>
+                    <div class="image">
+                        <img src="https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/header.jpg" alt="${game.name} header image">
+                    </div>
+                </section>
+            `;
+        }
+        return html;
+    }
+</script>
+
+<!-- 
+ -->

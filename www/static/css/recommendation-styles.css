@@ -1,0 +1,39 @@
+.timeline-section {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.timeline-section .content {
+    width: 50%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.timeline-section .image {
+    width: 50%;
+    background-size: cover;
+    background-position: center;
+    min-height: 200px;
+}
+
+.timeline-section.left {
+    flex-direction: row;
+}
+
+.timeline-section.right {
+    flex-direction: row-reverse;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.body {
+    color: white;
+}
