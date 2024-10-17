@@ -11,16 +11,16 @@ h1 {
 }
 
 #title{
-  font-family: "Press Start 2P", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
 
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
 #subtitle{
-  width: 65%;
-  margin: 0 auto;         
-  text-align: center;     
+  text-align: center;
   word-wrap: break-word;
+  width: 60%;
+  margin: 0 auto;
 }
 
 #searchBar {
@@ -28,6 +28,17 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 5px;
+}
+
+input[type=text] {
+  border: 1px solid black;
+  width: auto;
+  font-size: xx-large;
+}
+
+#searchBar button{
+  display: block;
+
 }
 
 #popupDialogue {
@@ -41,6 +52,12 @@ h1 {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   visibility: hidden;
+}
+
+
+#filterButtons{
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .dark {

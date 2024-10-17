@@ -22,7 +22,7 @@ h1, h2 {
     padding: 10px;
     margin: 20px 30px;
     border: solid 20px #0A21C0;
-    height: 90vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;

@@ -22,14 +22,16 @@ function hamburger() {
       }
   }
 
-function openPop() {
-    const popDialogue =
+  function openPop() {             /* popup https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/-->> */
+
+    const popupDialogue =
         document.getElementById(
             "popupDialogue"
         );
-    popDialogue.style.visibility =
-        popDialogue.style.visibility ===
+    popupDialogue.style.visibility =
+        popupDialogue.style.visibility ===
             "visible"
             ? "hidden"
-            : "visible";
+            : "visible"
+
 }

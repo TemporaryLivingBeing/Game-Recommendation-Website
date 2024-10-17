@@ -1,8 +1,10 @@
-#logo{
-    height: 80px;
-}
 
-.topnav { /* inspired by https://www.w3schools.com/howto/howto_js_mobile_navbar.asp */
+#logo {
+    max-height: 85px; 
+    width: auto;       
+  }
+  .topnav {
+
     background-color: gray;
     overflow: hidden;
     /* display: flex;
@@ -33,12 +35,7 @@
     display: none;
   }
   
-  .topnav img#logo {
-    max-height: 45px; 
-    width: auto;       
-    justify-content: space-between;
-  }
-  
+
   @media screen and (max-width: 600px) {
     .topnav a:not(:first-child) {display: none;}
     .topnav a.icon {
@@ -60,13 +57,3 @@
         text-align: left;
     }
   }
-  
-  input[type=text] {
-    /* padding: 5px; */
-    border: 1px solid black;
-    width: auto;
-    /* margin-top: 8px;
-    margin-right: 16px; */
-    font-size: xx-large;
-  }
-  

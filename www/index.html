@@ -39,7 +39,10 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
+
+    <div id = "logo-box">        
+        <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
+    </div>
 
 
     <div class="topnav" id="myTopnav">
@@ -66,8 +69,13 @@
             <button class = "seachButton" id = "base_search" onclick = "window.location.href='recommendations.html'">
                 <i class="fa-solid fa-magnifying-glass"></i>  <!-- got the onclick for button from here https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
             </button>  
+
+            <button class = "seachButton" id = "filter" onclick = "openPop()"> <i class="fa-solid fa-list"></i> </button> 
+            <!-- popup https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/-->
+
             <button class = "seachButton" id = "filter" onclick = "openPop()"> <i class="fa-solid fa-list"></i> </button>
             <!-- popup implementation https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/ -->
+
             <div id="popupDialogue">
                 <p>
                     <lable>Popular Tags: </lable>
@@ -82,11 +90,13 @@
                 <p>
                     <lable>Minimum Rating (out of 5): </lable><input type="number" min="0" max = "5" step=".1"> <!--made using https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number#-->
                 </p>
-                <p>
+
+                <p>   
                     <lable>Minimum Active Player Base: </lable><input type="number" min="0">
                 </p>
 
-                <p>
+                <p id = "filterButtons">
+
                     <button onclick = "window.location.href='recommendations.html'">
                         Search
                     </button>
@@ -104,8 +114,6 @@
     </p>
 
 </body>
-
-
 </html>
 
 
