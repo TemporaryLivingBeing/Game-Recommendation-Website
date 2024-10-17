@@ -1,8 +1,10 @@
+
 #logo {
     max-height: 85px; 
     width: auto;       
   }
   .topnav {
+
     background-color: gray;
     overflow: hidden;
     /* display: flex;
@@ -33,6 +35,7 @@
     display: none;
   }
   
+
   @media screen and (max-width: 600px) {
     .topnav a:not(:first-child) {display: none;}
     .topnav a.icon {

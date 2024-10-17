@@ -11,6 +11,7 @@ h1 {
 }
 
 #title{
+
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
@@ -37,6 +38,7 @@ input[type=text] {
 
 #searchBar button{
   display: block;
+
 }
 
 #popupDialogue {
@@ -51,6 +53,7 @@ input[type=text] {
   z-index: 1000;
   visibility: hidden;
 }
+
 
 #filterButtons{
   display: flex;
