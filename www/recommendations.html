@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="static/css/aboutStyle.css">
     <link rel="stylesheet" href="static/css/topBar.css">
     <script src="static/js/scripts.js"></script>
+    <script src="https://kit.fontawesome.com/7ef1811b92.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,19 +18,19 @@
 
 
     <div class="topnav" id="myTopnav">
-      <a href="index.html" >Home</a>
-      <a href="about.html" >About</a>
-      <a href="contact.html">Contact</a>
-      <a href="recommendations.html" class="active">Recommendations</a>
-      <a href="javascript:void(0);" class="icon" onclick="hamburger()">
-          <i class="fa fa-bars"></i>
-      </a>
-  </div>
+        <a href="index.html" class="active stay">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="javascript:void(0);" class="icon" onclick="hamburger()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <a onclick="toggleDarkMode()" class="stay" id = "darkMode"><i class="fa-solid fa-sun" id = "sunMoon"></i></a>
+      </div>
 
     <main class="page-content">
         <h1>Your Game Recommendations</h1>
         <button id="fetchData" onclick="fetchAndDisplayGames()" class="btn">Fetch Games</button>
-        <button class="darkButton" onclick="toggleDarkMode()">Dark mode (not implemented yet)</button>
         <div id="gamesContainer"></div>
     </main>
         

@@ -1,4 +1,12 @@
 function toggleDarkMode() {
+    let i = document.getElementById("sunMoon");
+    
+    if (i.classList.contains('fa-sun')) {
+        i.classList.replace('fa-sun', 'fa-moon');
+    } else {
+        i.classList.replace('fa-moon', 'fa-sun');
+    }
+
     let element = document.body;
     element.classList.toggle("dark");
 
@@ -34,4 +42,37 @@ function hamburger() {
             ? "hidden"
             : "visible"
 
+}
+
+let slideIndex = 1;
+window.onload = function(){
+    showSlides(slideIndex);
+}
+
+//gotten fromhttps://www.w3schools.com/howto/howto_js_slideshow.asp
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
 }
