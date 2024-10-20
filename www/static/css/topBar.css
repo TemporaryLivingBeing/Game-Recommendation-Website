@@ -3,8 +3,7 @@
     max-height: 85px; 
     width: auto;       
   }
-  .topnav {
-
+  .topnav { /* inspired by https://www.w3schools.com/howto/howto_js_mobile_navbar.asp */
     background-color: gray;
     overflow: hidden;
     /* display: flex;
@@ -68,14 +67,8 @@
       top: 0;
     }
 }
-
-  
   input[type=text] {
-    /* padding: 5px; */
     border: 1px solid black;
     width: auto;
-    /* margin-top: 8px;
-    margin-right: 16px; */
     font-size: xx-large;
   }
-
