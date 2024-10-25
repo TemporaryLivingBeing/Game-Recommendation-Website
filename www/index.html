@@ -39,18 +39,22 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
+
+    <div id = "logo-box">        
+        <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
+    </div>
 
 
     <div class="topnav" id="myTopnav">
-        <a href="index.html" class="active">Home</a>
+        <a href="index.html" class="active stay">Home</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
         <a href="recommendations.html">Recommendations</a>
         <a href="javascript:void(0);" class="icon" onclick="hamburger()">
             <i class="fa fa-bars"></i>
         </a>
-    </div>
+        <a onclick="toggleDarkMode()" class="stay" id = "darkMode"><i class="fa-solid fa-sun" id = "sunMoon"></i></a>
+      </div>
 
     <h1 id = "title">Game Fetch</h1>
         <div id = "subtitle">
@@ -66,8 +70,10 @@
             <button class = "seachButton" id = "base_search" onclick = "window.location.href='recommendations.html'">
                 <i class="fa-solid fa-magnifying-glass"></i>  <!-- got the onclick for button from here https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
             </button>  
-            <button class = "seachButton" id = "filter" onclick = "openPop()"> <i class="fa-solid fa-list"></i> </button>
-            <!-- popup implementation https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/ -->
+
+            <button class = "seachButton" id = "filter" onclick = "openPop()"> <i class="fa-solid fa-list"></i> </button> 
+            <!-- popup https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/-->
+
             <div id="popupDialogue">
                 <p>
                     <lable>Popular Tags: </lable>
@@ -82,11 +88,13 @@
                 <p>
                     <lable>Minimum Rating (out of 5): </lable><input type="number" min="0" max = "5" step=".1"> <!--made using https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number#-->
                 </p>
-                <p>
+
+                <p>   
                     <lable>Minimum Active Player Base: </lable><input type="number" min="0">
                 </p>
 
-                <p>
+                <p id = "filterButtons">
+
                     <button onclick = "window.location.href='recommendations.html'">
                         Search
                     </button>
@@ -96,16 +104,47 @@
                 </p>
             </div>
         </div>
-    <p>
-        <button class="darkButton" onclick="toggleDarkMode()">Dark mode</button>
-    </p>
-    <p>
-        <a href="https://cs.furman.edu">Visit Furman CS</a>
-    </p>
+        <p></p>
+        <!-- gottent from https://www.w3schools.com/howto/howto_js_slideshow.asp-->
+        <div class="slideshow-container">
+    
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+              <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/730/header.jpg?t=1719426374" style="width:100%">
+            </div>
+          
+            <div class="mySlides fade">
+              <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2000890/header.jpg?t=1729123005" style="width:100%">
+            </div>
+          
+            <div class="mySlides fade">
+              <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1790600/header.jpg?t=1729145174" style="width:100%">
+            </div>
+    
+            <div class="mySlides fade">
+                <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/359550/header.jpg?t=1719504498" style="width:100%">
+            </div>
+              
+            <div class="mySlides fade">
+                <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/381210/header.jpg?t=1727894560" style="width:100%">
+            </div>
+    
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+          <br>
+          
+          <!-- The dots/circles -->
+          <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)" onload="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+          </div>
+        </div>
 
 </body>
-
-
 </html>
 
 

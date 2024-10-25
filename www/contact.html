@@ -21,12 +21,15 @@
     <!-- End Google Tag Manager -->
         <meta charset="utf-8">
         <title>Contact Us</title>
+        <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="static/css/style.css">
         <link rel="stylesheet" href="static/css/topBar.css">
         <link rel="stylesheet" href="static/css/contactStyle.css">
 
         <script src="static/js/scripts.js"></script>
+        <script src="https://kit.fontawesome.com/7ef1811b92.js" crossorigin="anonymous"></script>
     </head>
     <body>
   
@@ -36,21 +39,20 @@
     <!-- End Google Tag Manager (noscript) -->
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
         
         <div class="topnav" id="myTopnav">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
-            <a href="contact.html" class="active">Contact</a>
+            <a href="contact.html"class="active stay">Contact</a>
             <a href="recommendations.html">Recommendations</a>
             <a href="javascript:void(0);" class="icon" onclick="hamburger()">
                 <i class="fa fa-bars"></i>
             </a>
-        </div>
+            <a onclick="toggleDarkMode()" class="stay" id = "darkMode"><i class="fa-solid fa-sun" id = "sunMoon"></i></a>
+          </div>
+
         <br></br>
         <button class="contactButton" onclick="toggleContact()">Contact Us</button>
-        <br></br>
-        <button class="darkButton" onclick="toggleDarkMode()">Dark mode</button>
         <br></br>
         <div class="contact-us-box" id="contactForm">
             <form>
