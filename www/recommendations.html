@@ -1,88 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DCQX8F5EG6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DCQX8F5EG6');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WC3QQRX9');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steam Owned Games</title>
+    <title>Steam Game Recommendations</title>
     <link rel="stylesheet" href="static/css/recommendation-styles.css">
-            
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/css/aboutStyle.css">
     <link rel="stylesheet" href="static/css/topBar.css">
-    <script src="static/js/scripts.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/7ef1811b92.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WC3QQRX9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
+    <img src="static/img/Game_Fetch_Logo.png" id="logo"/>
 
     <div class="topnav" id="myTopnav">
-        <a href="index.html" class="active stay">Home</a>
+        <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
-        <a href="recommendations.html">Recommendations</a>
+        <a href="recommendations.html" class="active stay">Recommendations</a>
         <a href="javascript:void(0);" class="icon" onclick="hamburger()">
             <i class="fa fa-bars"></i>
         </a>
-        <a onclick="toggleDarkMode()" class="stay" id = "darkMode"><i class="fa-solid fa-sun" id = "sunMoon"></i></a>
-      </div>
+        <a onclick="toggleDarkMode()" class="stay" id="darkMode">
+            <i class="fa-solid fa-sun" id="sunMoon"></i>
+        </a>
+    </div>
 
     <main class="page-content">
         <h1>Your Game Recommendations</h1>
-        <button id="fetchData" onclick="fetchAndDisplayGames()" class="btn">Fetch Games</button>
-        <div id="gamesContainer"></div>
+        <div class="game-form">
+            <div class="game-input-container">
+                <div class="search-container">
+                    <input type="text" id="gameSearch" placeholder="Search games..." onkeyup="searchGames()">
+                    <select id="gameSelect" size="6">
+                        <option value="">Select a game...</option>
+                    </select>
+                    <div class="pagination">
+                        <button onclick="previousPage()" class="btn page-btn">Previous</button>
+                        <span id="pageInfo">Page 1</span>
+                        <button onclick="nextPage()" class="btn page-btn">Next</button>
+                    </div>
+                </div>
+                <button onclick="addGame()" class="btn">Add Game</button>
+            </div>
+            
+            <div class="game-list" id="gameList">
+
+            </div>
+
+            <div id="validationMessage" class="validation-message"></div>
+
+            <div class="loading" id="loadingIndicator">
+                Loading recommendations...
+            </div>
+
+            <button onclick="submitGames()" class="submit-btn" disabled>Get Recommendations</button>
+        </div>
+
+        <div id="gamesContainer">
+
+        </div>
     </main>
+
+    <script src="static/js/scripts.js"></script>
+    <script>
+ var allGames = [];
+var currentPage = 1;
+var gamesPerPage = 100;
+var filteredGames = [];
+var userGames = {};
+
+// Load games from file
+fetch('static/games.txt')
+    .then(function(response) {
+        return response.text();
+    })
+    .then(function(data) {
+        var games = data.split('\n');
+        for (var i = 0; i < games.length; i++) {
+            if (games[i].trim()) {
+                allGames.push(games[i].trim());
+            }
+        }
+        allGames.sort();
+        filteredGames = allGames;
+        updateGameSelect();
+    });
+
+function searchGames() {
+    var searchText = document.getElementById('gameSearch').value.toLowerCase();
+    filteredGames = [];
+    
+    for (var i = 0; i < allGames.length; i++) {
+        if (allGames[i].toLowerCase().includes(searchText)) {
+            filteredGames.push(allGames[i]);
+        }
+    }
+    currentPage = 1;
+    updateGameSelect();
+}
+
+function updateGameSelect() {
+    var select = document.getElementById('gameSelect');
+    var pageInfo = document.getElementById('pageInfo');
+    
+    var startIndex = (currentPage - 1) * gamesPerPage;
+    var endIndex = Math.min(startIndex + gamesPerPage, filteredGames.length);
+    var totalPages = Math.ceil(filteredGames.length / gamesPerPage);
+    
+    pageInfo.textContent = 'Page ' + currentPage + ' of ' + totalPages;
+    
+    select.innerHTML = '';
+    for (var i = startIndex; i < endIndex; i++) {
+        var option = document.createElement('option');
+        option.value = filteredGames[i];
+        option.textContent = filteredGames[i];
+        select.appendChild(option);
+    }
+}
+
+function nextPage() {
+    var maxPages = Math.ceil(filteredGames.length / gamesPerPage);
+    if (currentPage < maxPages) {
+        currentPage++;
+        updateGameSelect();
+    }
+}
+
+function previousPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        updateGameSelect();
+    }
+}
+
+function validateForm() {
+    var gameCount = 0;
+    for (var game in userGames) {
+        gameCount++;
+    }
+    
+    var submitBtn = document.querySelector('.submit-btn');
+    var validationMessage = document.getElementById('validationMessage');
+    
+    if (gameCount < 3) {
+        submitBtn.disabled = true;
+        validationMessage.style.display = 'block';
+        validationMessage.textContent = 'Please add at least 3 games (' + gameCount + '/3 selected)';
+    } else {
+        submitBtn.disabled = false;
+        validationMessage.style.display = 'none';
+    }
+}
+
+function addGame() {
+    var select = document.getElementById('gameSelect');
+    var game = select.value;
+    
+    if (!game || userGames[game]) {
+        return;
+    }
+    
+    userGames[game] = 0;
+    updateGameList();
+    validateForm();
+}
+
+function updateGameList() {
+    var gameList = document.getElementById('gameList');
+    gameList.innerHTML = '';
+    
+    for (var game in userGames) {
+        var hours = userGames[game];
+        var gameItem = document.createElement('div');
+        gameItem.className = 'game-item';
+        gameItem.innerHTML = 
+            '<span>' + game + '</span>' +
+            '<div>' +
+                '<input type="number" ' +
+                    'value="' + hours + '" ' +
+                    'class="game-hours" ' +
+                    'onchange="validateHours(this, \'' + game + '\')" ' +
+                    'min="0" ' +
+                    'step="1" ' +
+                    'placeholder="Hours">' +
+                '<button onclick="removeGame(\'' + game + '\')" class="remove-game">Remove</button>' +
+            '</div>';
+        gameList.appendChild(gameItem);
+    }
+}
+
+function validateHours(input, game) {
+    var hours = parseInt(input.value) || 0;
+    hours = Math.max(0, Math.floor(hours));
+    input.value = hours;
+    userGames[game] = hours;
+}
+
+function removeGame(game) {
+    delete userGames[game];
+    updateGameList();
+    validateForm();
+}
+
+function submitGames() {
+    var loadingIndicator = document.getElementById('loadingIndicator');
+    loadingIndicator.style.display = 'block';
+
+    fetch('http://127.0.0.1:5000/get_recommendations', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        mode: 'cors',
+        body: JSON.stringify(userGames)
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        loadingIndicator.style.display = 'none';
+        document.getElementById('gamesContainer').innerHTML = createGameTimeline(data.games);
+    });
+}
+
+function createGameTimeline(games) {
+    var html = '';
+    for (var i = 0; i < games.length; i++) {
+        var game = games[i];
+        var sectionClass = 'timeline-section';
+        if (i % 2 === 0) {
+            sectionClass += ' left';
+        } else {
+            sectionClass += ' right';
+        }
         
+        html += 
+            '<section class="' + sectionClass + '">' +
+                '<div class="content">' +
+                    '<h2>' + game.name + '</h2>' +
+                    '<p>AppID: ' + game.appid + '</p>' +
+                    '<p>Playtime: ' + Math.floor(game.playtime_forever / 60) + ' hours</p>' +
+                    '<a href="https://store.steampowered.com/app/' + game.appid + '" class="btn" target="_blank">View in Store</a>' +
+                '</div>' +
+                '<div class="image">' +
+                    '<img src="https://steamcdn-a.akamaihd.net/steam/apps/' + game.appid + '/header.jpg" alt="' + game.name + ' header image">' +
+                '</div>' +
+            '</section>';
+    }
+    return html;
+    }
+    </script>
 </body>
 </html>
-
-
-<script>
-    function fetchAndDisplayGames() {
-        fetch('http://127.0.0.1:5000/get_data')
-            .then(getResponse)
-            .then(getData);
-    }
-
-    function getResponse(response) {
-        return response.json();
-    }
-
-    function getData(data) {
-        const container = document.getElementById('gamesContainer');
-        container.innerHTML = createGameTimeline(data.response.games);
-    }
-
-    function createGameTimeline(games) {
-        let html = '';
-        for (let i = 0; i < games.length; i++) {
-            const game = games[i];
-            let sectionClass = 'timeline-section';
-            if (i % 2 === 0) {
-                sectionClass += ' left';
-            } else {
-                sectionClass += ' right';
-            }
-
-            html += `
-                <section class="${sectionClass}">
-                    <div class="content">
-                        <h2>${game.name}</h2>
-                        <p>AppID: ${game.appid}</p>
-                        <p>Playtime: ${Math.floor(game.playtime_forever / 60)} hours</p>
-                        <a href="https://store.steampowered.com/app/${game.appid}" class="btn" target="_blank">View in Store</a>
-                    </div>
-                    <div class="image">
-                        <img src="https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/header.jpg" alt="${game.name} header image">
-                    </div>
-                </section>
-            `;
-        }
-        return html;
-    }
-</script>
-
-<!-- 
- -->
