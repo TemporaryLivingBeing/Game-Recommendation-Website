@@ -26,7 +26,7 @@ def create_app(testing=False):
                 row_count = sum(1 for row in csv.reader(file))
                 if row_count >= 1000:
                     print("overload")
-                    return jsonify({'message': 'Contact list is full. Try again later.'}), 404
+                    return jsonify({'message': 'Contact list is full. Try again later.'}), 404 #change
                 
         with open(csv_file, mode='a', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
