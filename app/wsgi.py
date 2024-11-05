@@ -1,3 +1,4 @@
+
 from contact import create_app as create_contact_app
 # from app.recommendations import create_app as create_rec_app
 

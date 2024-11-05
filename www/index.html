@@ -66,7 +66,11 @@
             </p>
         </div>
         <div id = "searchBar">
-            <input type = "text" placeholder="Game Search"> <!-- made using https://www.w3schools.com/howto/howto_css_searchbar.asp -->
+            <div id="searchBarPopup">
+                <input type="text" placeholder="Game Search" id="gameSearch" oninput="showDropdown()" />
+                <div id="gameSelectIndex" style = "display: none;"></div>
+            </div>
+
             <button class = "seachButton" id = "base_search" onclick = "window.location.href='recommendations.html'">
                 <i class="fa-solid fa-magnifying-glass"></i>  <!-- got the onclick for button from here https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
             </button>  
@@ -132,7 +136,85 @@
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-        </div>        
+        </div>  
+    <script>
+        let allGames = [];
+        let filteredGames = [];
+
+        // Fetch games list from file
+        fetch('static/games.txt')
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(data) {
+                let games = data.split('\n');
+                for (let game of games) {
+                    if (game.trim()) {
+                        allGames.push(game.trim());
+                    }
+                }
+                allGames.sort();
+                filteredGames = allGames;
+                updateGameSelect();
+            });
+
+        function updateGameSelect() {
+            const select = document.getElementById('gameSelectIndex');
+            select.innerHTML = ''; 
+
+            if (filteredGames.length === 0) {
+                select.style.display = 'none';
+                return;
+            }
+
+            filteredGames.forEach(game => {
+                const optionDiv = document.createElement('div');
+                optionDiv.textContent = game;
+                optionDiv.classList.add('dropdown-option'); 
+                optionDiv.onclick = function() {
+                    document.getElementById('gameSearch').value = game;
+                    select.style.display = 'none';
+                };
+                select.appendChild(optionDiv);
+            });
+
+            select.style.display = 'block'; 
+        }
+
+        function showDropdown() {
+            const searchInput = document.getElementById('gameSearch');
+            searchGames();
+
+            const gameSelect = document.getElementById('gameSelectIndex');
+            gameSelect.style.display = filteredGames.length ? 'block' : 'none';
+        }
+
+        function searchGames() {
+            const searchText = document.getElementById('gameSearch').value.toLowerCase();
+            filteredGames = allGames.filter(game => game.toLowerCase().includes(searchText));
+            updateGameSelect();
+        }
+
+        function selectGame() {
+            const gameSelect = document.getElementById('gameSelectIndex');
+            const selectedGame = gameSelect.value;
+            const searchInput = document.getElementById('gameSearch');
+            searchInput.value = selectedGame;
+            gameSelect.style.display = 'none'; // Hide the dropdown after selection
+        }
+
+        // Close dropdown when clicking outside of search bar
+        document.addEventListener('click', function(event) {
+            const searchBar = document.querySelector('searchBar');
+            const gameSelect = document.getElementById('gameSelectIndex');
+
+            // Check if the click is outside both the search bar and the dropdown
+            if (!searchBar.contains(event.target) && !gameSelect.contains(event.target)) {
+                gameSelect.style.display = 'none';
+            }
+        });
+
+    </script>      
 
 </body>
 </html>
