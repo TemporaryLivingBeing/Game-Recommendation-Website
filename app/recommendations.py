@@ -4,10 +4,17 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
+test_config = False
+app.config["Testing"] = test_config
 CORS(app)
 
 df = None
 MIN_HOURS_THRESHOLD = 15
+
+def create_app(test_config=False):
+    app = Flask(__name__)
+    app.config['TESTING'] = test_config
+    return app
 
 def load_data():
     global df
