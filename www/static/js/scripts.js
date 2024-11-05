@@ -28,19 +28,46 @@ function hamburger() {
       } else {
           x.className = "topnav";
       }
+}
+
+function searchGames() {
+  var searchText = document.getElementById('gameSearch').value.toLowerCase();
+  filteredGames = [];
+  
+  for (var i = 0; i < allGames.length; i++) {
+      if (allGames[i].toLowerCase().includes(searchText)) {
+          filteredGames.push(allGames[i]);
+      }
   }
+  updateGameSelect();
+}  
 
-  function openPop() {             /* popup https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/-->> */
+function updateGameSelect() {
+  var select = document.getElementById('gameSelect');
+  
+  var startIndex = (currentPage - 1) * gamesPerPage;
+  var endIndex = Math.min(startIndex + gamesPerPage, filteredGames.length);
+  
+  select.innerHTML = '';
+  for (var i = startIndex; i < endIndex; i++) {
+      var option = document.createElement('option');
+      option.value = filteredGames[i];
+      option.textContent = filteredGames[i];
+      select.appendChild(option);
+  }
+}
 
-    const popupDialogue =
-        document.getElementById(
-            "popupDialogue"
-        );
-    popupDialogue.style.visibility =
-        popupDialogue.style.visibility ===
-            "visible"
-            ? "hidden"
-            : "visible"
+function openPop() {             /* popup https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/-->> */
+
+  const popupDialogue =
+      document.getElementById(
+          "popupDialogue"
+      );
+  popupDialogue.style.visibility =
+      popupDialogue.style.visibility ===
+          "visible"
+          ? "hidden"
+          : "visible"
 
 }
 
