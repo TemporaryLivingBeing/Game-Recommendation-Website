@@ -11,7 +11,7 @@ def create_rec_app():
     app = Flask(__name__, 
                 static_folder='../www/static',
                 template_folder='../www')
-                
+   
 #    CORS(app, resources={
 #    r"/get_recommendations": {
 #        "origins": ["https://emirhangencer.com", "http://www.emirhangencer.com"],
@@ -118,6 +118,10 @@ def create_rec_app():
         if df is None:
             load_data()
         valid_games = df[df['hours'] >= MIN_HOURS_THRESHOLD]['game'].unique()
+        return jsonify({'games': sorted(valid_games.tolist())})
+
+    return app
+HOURS_THRESHOLD]['game'].unique()
         return jsonify({'games': sorted(valid_games.tolist())})
 
     return app
