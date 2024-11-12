@@ -3,30 +3,24 @@ from flask_cors import CORS
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 import os
+import requests
 
 MIN_HOURS_THRESHOLD = 15
 df = None
 
+
 def create_rec_app():
-    app = Flask(__name__, 
+    app = Flask(__name__,
                 static_folder='../www/static',
                 template_folder='../www')
-   
-#    CORS(app, resources={
-#    r"/get_recommendations": {
-#        "origins": ["https://emirhangencer.com", "http://www.emirhangencer.com"],
-#        "methods": ["POST", "OPTIONS"],
-#        "allow_headers": ["Content-Type"]
-#    }
-#})
 
     def load_data():
         global df
         csv_path = os.path.join(os.path.dirname(__file__), 'files', 'steam-200k.csv')
         df = pd.read_csv(csv_path,
-            header=None,
-            names=['user', 'game', 'purchase', 'hours', '0'],
-            quotechar='"')
+                        header=None,
+                        names=['user', 'game', 'purchase', 'hours', '0'],
+                        quotechar='"')
         df = df.drop(columns=['0', 'purchase'])
         df = df[df['hours'] >= MIN_HOURS_THRESHOLD]
 
@@ -41,14 +35,14 @@ def create_rec_app():
         user_games = request.json
         if not user_games:
             return jsonify({'error': 'No games provided'}), 400
-        
+
         test_user_id = 999999999
-        filtered_games = {game: hours for game, hours in user_games.items() 
+        filtered_games = {game: hours for game, hours in user_games.items()
                          if hours >= MIN_HOURS_THRESHOLD}
-        
+
         if not filtered_games:
             return jsonify({'games': []})
-        
+
         test_user_df = pd.DataFrame({
             'user': [test_user_id] * len(filtered_games),
             'game': list(filtered_games.keys()),
@@ -79,7 +73,7 @@ def create_rec_app():
 
         similarity_scores = similarity_df[test_user_id]
         most_similar_users = similarity_scores[
-            (similarity_scores.index != test_user_id) & 
+            (similarity_scores.index != test_user_id) &
             (similarity_scores > 0)
         ].nlargest(5).index
 
@@ -92,13 +86,13 @@ def create_rec_app():
         for similar_user in most_similar_users:
             similar_user_games = temp_df[temp_df['user'] == similar_user]
             new_recommendations = similar_user_games[
-                (~similar_user_games['game'].isin(seen_games)) & 
+                (~similar_user_games['game'].isin(seen_games)) &
                 (similar_user_games['hours'] >= MIN_HOURS_THRESHOLD)
             ]
             if not new_recommendations.empty:
                 seen_games.update(new_recommendations['game'].tolist())
                 all_recommendations.append(new_recommendations)
-        
+
         if not all_recommendations:
             return jsonify({'games': []})
 
@@ -109,7 +103,7 @@ def create_rec_app():
 
         return jsonify({'games': [{
             'name': row['game'],
-            'appid': '0',
+            'appid': find_appid(row['game']),
             'playtime_forever': int(row['hours'] * 60)
         } for _, row in recommendations.iterrows()]})
 
@@ -121,7 +115,25 @@ def create_rec_app():
         return jsonify({'games': sorted(valid_games.tolist())})
 
     return app
-HOURS_THRESHOLD]['game'].unique()
-        return jsonify({'games': sorted(valid_games.tolist())})
 
-    return app
+
+def find_appid(game_name):
+    url = "https://store.steampowered.com/api/storesearch"
+    params = {
+        'term': game_name,
+        'l': 'english',
+        'cc': 'US'
+    }
+
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        if data.get('total', 0) > 0:
+            return str(data['items'][0]['id'])
+        return '0'
+
+    except Exception as e:
+        print(f"Error finding AppID for {game_name}: {e}")
+        return '0'

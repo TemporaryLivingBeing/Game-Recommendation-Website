@@ -321,7 +321,7 @@ function createGameTimeline(games) {
                     '<h2>' + game.name + '</h2>' +
                     '<p>AppID: ' + game.appid + '</p>' +
                     '<p>Playtime: ' + Math.floor(game.playtime_forever / 60) + ' hours</p>' +
-                    '<a href="https://store.steampowered.com/app/' + game.appid + '" class="btn" target="_blank">View in Store</a>' +
+                    '<a href="/game_page/' + game.appid + '" class="btn">View Details</a>' +
                 '</div>' +
                 '<div class="image">' +
                     '<img src="https://steamcdn-a.akamaihd.net/steam/apps/' + game.appid + '/header.jpg" alt="' + game.name + ' header image">' +

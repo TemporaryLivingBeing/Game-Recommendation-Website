@@ -19,7 +19,7 @@ def contact():
 
 @app.route("/game_page/<game_id>")
 def create_game_page(game_id):
-    with open('/Users/jacksbigmac/Downloads/Game-Recommendation-Website/app/files/game_details_complete.json', 'r') as file:
+    with open('/app/files/game_details_complete.json', 'r') as file:
         game_json = json.load(file)    
     if game_id not in game_json.keys():
         game_json = {}
