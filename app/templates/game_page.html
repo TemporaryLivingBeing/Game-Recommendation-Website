@@ -1,18 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        <h1>
-            {{game_title}}
+{% extends "base_template.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gamePage.css') }}"> 
+    <!-- solution given by chatGPT -->
+{% endblock %}
 
-        </h1>
-    </div>
-    
-    <p>{{game_info | safe}}</p>
-</body>
-</html>
+{% block beginning %}
+    {% if game_json %}
+        {% if game_json['name'] %}
+            <h1>{{ game_json['name'] }}</h1>
+        {% endif %}
+        <div id = "container">
+            {% if game_json['header_image'] %}
+                <div id="left">
+                    <img src="{{ game_json['header_image'] }}" alt="Game Image">
+                </div>
+            {% endif %}
+            <div id="right">
+                {% if game_json['is_free'] %}
+                    <p>Free to Download</p>
+                {% endif %}
+                {% if game_json['developers'] %}
+                    <p>Developers: {{ game_json['developers'] | join(', ') }}</p>
+                {% endif %}
+                {% if game_json['publishers'] %}
+                    <p>Publishers: {{ game_json['publishers'] | join(', ') }}</p>
+                {% endif %}
+                {% if game_json['metacritic'] %}
+                    <p>Metacritic: {{ game_json['metacritic']['score']}}</p>
+                {% endif %}
+                {% if game_json['genres'] %}
+                    <span>Genres: 
+                        {% for genre in game_json['genres'] %}
+                            {{ genre['description'] }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+        <div id="description">
+            {% if game_json['about_the_game'] %}
+                <p>Game Description:</p>
+                <p>{{ game_json['about_the_game'] | safe}}</p>
+            {% endif %}
+        </div>
+        <button onclick = "toggleRequirements()">Show Computer Requirements</button>
+        <div id = "req-container">
+            {% if game_json['pc_requirements']['minimum'] %}
+                <p id = "pc">PC Requirements: {{ game_json['pc_requirements']['minimum'] | safe}}</p>
+            {% endif %}
+            {% if game_json['mac_requirements']['minimum'] %}
+                <p id = "mac">Mac Requirements: {{ game_json['mac_requirements']['minimum'] | safe }}</p>
+            {% endif %}
+            {% if game_json['linux_requirements']['minimum'] %}
+                <p id = "linux">Linux Requirements: {{ game_json['linux_requirements']['minimum']| safe}}</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <h1>Sorry the game page does not yet exist for this game :(</h1>
+    {% endif %}
+{% endblock %}
+
+{% block script %}
+<script>
+    function toggleRequirements() {
+        var form = document.getElementById("req-container");
+        if (form.style.display == "none"){
+            form.style.display = "flex";
+        } 
+        else {
+            form.style.display = "none";
+        }
+    }
+
+    function closeForm() {
+        document.getElementById("contactForm").style.display = "none";
+    }
+</script>
+{% endblock %}
