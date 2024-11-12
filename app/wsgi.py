@@ -9,4 +9,4 @@ rec = create_rec_app()
 if __name__ == "__main__":
     contact.run()
     rec.run()
-    app.runt()
+    app.run()

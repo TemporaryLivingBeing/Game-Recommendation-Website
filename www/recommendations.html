@@ -93,7 +93,7 @@
     <script src="static/js/scripts.js"></script>
     <script>
         
-        var allGames = [];
+var allGames = [];
 var currentPage = 1;
 var gamesPerPage = 100;
 var filteredGames = [];
@@ -284,8 +284,23 @@ function submitGames() {
         return response.json();
     })
     .then(function(data) {
-        loadingIndicator.style.display = 'none';
+    loadingIndicator.style.display = 'none';
+    if (!data.games || data.games.length === 0) {
+        var gamesList = Object.keys(userGames).map(function(game) {
+            return game + ": " + userGames[game] + " hours";
+        }).join('\n');
+        
+        alert("No similar profiles have been found for user:\n\n" + gamesList);
+        
+        Object.keys(userGames).forEach(function(game) {
+            removeGame(game);
+        });
+        
+        document.getElementById('gamesContainer').innerHTML = '';
+    } 
+    else {
         document.getElementById('gamesContainer').innerHTML = createGameTimeline(data.games);
+        }
     });
 }
 
@@ -306,7 +321,7 @@ function createGameTimeline(games) {
                     '<h2>' + game.name + '</h2>' +
                     '<p>AppID: ' + game.appid + '</p>' +
                     '<p>Playtime: ' + Math.floor(game.playtime_forever / 60) + ' hours</p>' +
-                    '<a href="https://store.steampowered.com/app/' + game.appid + '" class="btn" target="_blank">View in Store</a>' +
+                    '<a href="/game_page/' + game.appid + '" class="btn">View Details</a>' +
                 '</div>' +
                 '<div class="image">' +
                     '<img src="https://steamcdn-a.akamaihd.net/steam/apps/' + game.appid + '/header.jpg" alt="' + game.name + ' header image">' +
