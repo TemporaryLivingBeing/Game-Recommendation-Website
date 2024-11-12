@@ -1,0 +1,71 @@
+{% extends "base_template.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="static/css/aboutStyle.css">
+{% endblock %}
+
+{% block beginning %}  
+        <div class="topnav" id="myTopnav">
+          <a href="index" class = "stay">Home</a>
+          <a href="about"class="active">About</a>
+          <a href="contact">Contact</a>
+          <a href="recommendations.html">Recommendations</a>
+          <a href="javascript:void(0);" class="icon" onclick="hamburger()">
+              <i class="fa fa-bars"></i>
+          </a>
+          <a onclick="toggleDarkMode()" class="stay" id = "darkMode"><i class="fa-solid fa-sun" id = "sunMoon"></i></a>
+        </div>
+  
+          <div class="mainBox">
+            <button class="accordion">What's our purpose?</button>
+            <div class="panel">
+              <p>
+                Our purpose is to provide an easy game recommendation service to users by utilising
+                data science and vectorisation.
+              </p>
+            </div>
+  
+            <button class="accordion">How does our model work?</button>
+            <div class="panel">
+              <p>
+                Basically, we have a dataset of tens of millions of lines for steam user profiles.
+                We create a profile for you based on the games you've entered and (if applicable)
+                the hours, and we run similarity search with our vectorisation algorithm to find
+                the most similar user profiles to you and offer recommendations based on them.
+              </p>
+            </div>
+  
+            <button class="accordion">Do we steal your data?</button>
+            <div class="panel">
+              <p>
+                We are committed to open-source code and have respect for user privacy, so we do not 
+                steal any of your data. All our source-code is accessible in our
+                <a href="https://github.com/TemporaryLivingBeing/Game-Recommendation-Website">Github repository</a>
+              </p>
+            </div>
+  
+            <button class="accordion">Does this cost money?</button>
+            <div class="panel">
+              <p>Fret not, user. This website is 100% free for all features.</p>
+            </div>
+          </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+        
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        } 
+    </script>
+{% endblock %}

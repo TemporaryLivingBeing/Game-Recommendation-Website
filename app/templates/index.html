@@ -1,54 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DCQX8F5EG6"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-DCQX8F5EG6');
-</script>
-
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WC3QQRX9');</script>
-    <!-- End Google Tag Manager -->
- 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Fetch</title>
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="static/css/topBar.css">
-    <script src="static/js/scripts.js"></script>
-    <script src="https://kit.fontawesome.com/7ef1811b92.js" crossorigin="anonymous"></script>
-
+{% extends "base_template.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-</head>
-<body>
-   
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WC3QQRX9"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 
-    <div id = "logo-box">        
-        <img src="static/img/Game_Fetch_Logo.png" id = "logo"/> <!-- used canva.com and remove.bg for logo-->
-    </div>
-
-
+{% block beginning %}  
     <div class="topnav" id="myTopnav">
-        <a href="index.html" class="active stay">Home</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
+        <a href="index" class="active stay">Home</a>
+        <a href="about">About</a>
+        <a href="contact">Contact</a>
         <a href="recommendations.html">Recommendations</a>
         <a href="javascript:void(0);" class="icon" onclick="hamburger()">
             <i class="fa fa-bars"></i>
@@ -108,6 +71,7 @@
                 </p>
             </div>
         </div>
+        <div id="gamesContainer"></div>
         <p></p>
         <!-- gottent from https://www.w3schools.com/howto/howto_js_slideshow.asp-->
         <div class="slideshow-container">
@@ -136,11 +100,14 @@
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-        </div>  
+        </div>
+{% endblock %}
+
+{% block script %}
     <script>
         let allGames = [];
         let filteredGames = [];
-
+    
         // Fetch games list from file
         fetch('static/games.txt')
             .then(function(response) {
@@ -157,16 +124,30 @@
                 filteredGames = allGames;
                 updateGameSelect();
             });
+    
+        function showDropdown() {
+            const searchInput = document.getElementById('gameSearch');
+            searchGames();
+    
+            const gameSelect = document.getElementById('gameSelectIndex');
+            gameSelect.style.display = filteredGames.length ? 'block' : 'none';
+        }
+    
+        function searchGames() {
+            const searchText = document.getElementById('gameSearch').value.toLowerCase();
+            filteredGames = allGames.filter(game => game.toLowerCase().includes(searchText));
+            updateGameSelect();
+        }
 
         function updateGameSelect() {
             const select = document.getElementById('gameSelectIndex');
             select.innerHTML = ''; 
-
+    
             if (filteredGames.length === 0) {
                 select.style.display = 'none';
                 return;
             }
-
+    
             filteredGames.forEach(game => {
                 const optionDiv = document.createElement('div');
                 optionDiv.textContent = game;
@@ -177,51 +158,71 @@
                 };
                 select.appendChild(optionDiv);
             });
-
+    
             select.style.display = 'block'; 
         }
 
-        function showDropdown() {
-            const searchInput = document.getElementById('gameSearch');
-            searchGames();
-
-            const gameSelect = document.getElementById('gameSelectIndex');
-            gameSelect.style.display = filteredGames.length ? 'block' : 'none';
-        }
-
-        function searchGames() {
-            const searchText = document.getElementById('gameSearch').value.toLowerCase();
-            filteredGames = allGames.filter(game => game.toLowerCase().includes(searchText));
-            updateGameSelect();
-        }
-
-        function selectGame() {
-            const gameSelect = document.getElementById('gameSelectIndex');
-            const selectedGame = gameSelect.value;
-            const searchInput = document.getElementById('gameSearch');
-            searchInput.value = selectedGame;
-            gameSelect.style.display = 'none'; // Hide the dropdown after selection
-        }
-
-        // Close dropdown when clicking outside of search bar
+        // Add click event listener to the entire document
         document.addEventListener('click', function(event) {
-            const searchBar = document.querySelector('searchBar');
+            const searchBarPopup = document.getElementById('searchBarPopup');
             const gameSelect = document.getElementById('gameSelectIndex');
-
-            // Check if the click is outside both the search bar and the dropdown
-            if (!searchBar.contains(event.target) && !gameSelect.contains(event.target)) {
+            
+            // If the click is not within the searchBarPopup (which includes the input and dropdown)
+            if (!searchBarPopup.contains(event.target)) {
                 gameSelect.style.display = 'none';
             }
         });
 
-    </script>      
+        function submitGames() {
+            // var loadingIndicator = document.getElementById('loadingIndicator');
+            // loadingIndicator.style.display = 'block';
+            var game =  document.getElementById('gameSearch').value;
 
-</body>
-</html>
+            fetch('get_available_games', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                mode: 'cors',
+                body: JSON.stringify({'game' : game})
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                // loadingIndicator.style.display = 'none';
+                let slideshow = document.getElementById('slideshow-container');
+                slideshow.style.display = 'none';
+                document.getElementById('gamesContainer').innerHTML = createGameTimeline(data.games);
+            });
+        }
 
-
-<!-- <select name="choice">
-    <option value="first">First Group</option>
-    <option value="second" selected>Second Group</option>
-    <option value="third">Third Group</option>
-  </select> -->
+        function createGameTimeline(games) {
+            var html = '';
+            for (var i = 0; i < games.length; i++) {
+                var game = games[i];
+                var sectionClass = 'timeline-section';
+                if (i % 2 === 0) {
+                    sectionClass += ' left';
+                } else {
+                    sectionClass += ' right';
+                }
+                
+                html += 
+                    '<section class="' + sectionClass + '">' +
+                        '<div class="content">' +
+                            '<h2>' + game.name + '</h2>' +
+                            '<p>AppID: ' + game.appid + '</p>' +
+                            '<p>Playtime: ' + Math.floor(game.playtime_forever / 60) + ' hours</p>' +
+                            '<a href="https://store.steampowered.com/app/' + game.appid + '" class="btn" target="_blank">View in Store</a>' +
+                        '</div>' +
+                        '<div class="image">' +
+                            '<img src="https://steamcdn-a.akamaihd.net/steam/apps/' + game.appid + '/header.jpg" alt="' + game.name + ' header image">' +
+                        '</div>' +
+                    '</section>';
+            }
+            return html;
+        }
+    </script>
+{% endblock %}
