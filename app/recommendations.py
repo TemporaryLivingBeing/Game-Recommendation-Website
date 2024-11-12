@@ -12,7 +12,13 @@ def create_rec_app():
                 static_folder='../www/static',
                 template_folder='../www')
                 
-    CORS(app)
+#    CORS(app, resources={
+#    r"/get_recommendations": {
+#        "origins": ["https://emirhangencer.com", "http://www.emirhangencer.com"],
+#        "methods": ["POST", "OPTIONS"],
+#        "allow_headers": ["Content-Type"]
+#    }
+#})
 
     def load_data():
         global df
