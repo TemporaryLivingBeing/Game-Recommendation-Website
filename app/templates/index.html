@@ -34,7 +34,7 @@
                 <div id="gameSelectIndex" style = "display: none;"></div>
             </div>
 
-            <button class = "seachButton" id = "base_search" onclick = "window.location.href='recommendations.html'">
+            <button class = "seachButton" id = "base_search" onclick = "submitGames()">
                 <i class="fa-solid fa-magnifying-glass"></i>  <!-- got the onclick for button from here https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
             </button>  
 
@@ -43,7 +43,7 @@
 
             <div id="popupDialogue">
                 <p>
-                    <lable>Popular Tags: </lable>
+                    <label>Popular Tags: </label>
                     <select name="gameTags" id="gameTagsPopup"> <!--made using https://www.w3schools.com/tags/tag_select.asp-->
                         <option value="indie">indie</option>
                         <option value="action">action</option>
@@ -53,16 +53,16 @@
                     </select>
                 </p>
                 <p>
-                    <lable>Minimum Rating (out of 5): </lable><input type="number" min="0" max = "5" step=".1"> <!--made using https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number#-->
+                    <label>Minimum Rating (out of 5): </label><input type="number" min="0" max = "5" step=".1"> <!--made using https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number#-->
                 </p>
 
                 <p>   
-                    <lable>Minimum Active Player Base: </lable><input type="number" min="0">
+                    <label>Filter Players by Play Time: <input type="number" min="1" max ="100" id = "percent">%</label>
                 </p>
 
                 <p id = "filterButtons">
 
-                    <button onclick = "window.location.href='recommendations.html'">
+                    <button onclick = "submitGames()">
                         Search
                     </button>
                     <button onclick="openPop()">
@@ -177,7 +177,9 @@
             // var loadingIndicator = document.getElementById('loadingIndicator');
             // loadingIndicator.style.display = 'block';
             var game =  document.getElementById('gameSearch').value;
-
+            var percent = parseFloat(document.getElementById('percent').value);
+            console.log(percent)
+            console.log(typeof percent)
             fetch('get_available_games', {
                 method: 'POST',
                 headers: {
@@ -185,14 +187,14 @@
                     'Accept': 'application/json'
                 },
                 mode: 'cors',
-                body: JSON.stringify({'game' : game})
+                body: JSON.stringify({'game' : game, 'percent': percent})
             })
             .then(function(response) {
                 return response.json();
             })
             .then(function(data) {
                 // loadingIndicator.style.display = 'none';
-                let slideshow = document.getElementById('slideshow-container');
+                let slideshow = document.getElementsByClassName('slideshow-container')[0];
                 slideshow.style.display = 'none';
                 document.getElementById('gamesContainer').innerHTML = createGameTimeline(data.games);
             });
@@ -200,8 +202,10 @@
 
         function createGameTimeline(games) {
             var html = '';
+            console.log(games);
             for (var i = 0; i < games.length; i++) {
                 var game = games[i];
+                console.log(game);
                 var sectionClass = 'timeline-section';
                 if (i % 2 === 0) {
                     sectionClass += ' left';
@@ -214,8 +218,7 @@
                         '<div class="content">' +
                             '<h2>' + game.name + '</h2>' +
                             '<p>AppID: ' + game.appid + '</p>' +
-                            '<p>Playtime: ' + Math.floor(game.playtime_forever / 60) + ' hours</p>' +
-                            '<a href="https://store.steampowered.com/app/' + game.appid + '" class="btn" target="_blank">View in Store</a>' +
+                            '<a href="/game_page/' + game.appid + '" class="btn" target="_blank">View Game Page</a>' +
                         '</div>' +
                         '<div class="image">' +
                             '<img src="https://steamcdn-a.akamaihd.net/steam/apps/' + game.appid + '/header.jpg" alt="' + game.name + ' header image">' +
