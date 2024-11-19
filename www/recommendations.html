@@ -27,8 +27,10 @@
     <link rel="stylesheet" href="static/css/topBar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/7ef1811b92.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js/minified/introjs.min.css">
 </head>
-<body">
+<body onload="checkTour()">
+    
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WC3QQRX9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -52,8 +54,11 @@
     <main class="page-content">
         <h1>Your Game Recommendations</h1>
         <div id = "modeSwitchers">
-            <button id = "oneTime" onclick="setMode('oneTime')" style = "background-color: blue;">One & Done</button>
-            <button id = "session" onclick="setMode('session')" >Saved List</button>
+            <button id = "oneTime" onclick="setMode('oneTime')" style = "background-color: blue;"
+            data-intro = "Click on this if you want a one time list for a one time recommendation." data-step="1">One & Done</button>
+            <button id = "session" onclick="setMode('session')" 
+            data-intro = "Click on this if you want the game list saved by your browser, where you can use and edit it upon each visit to the site"
+            data-step = "2">Saved List</button>
         </div>
         <div class="game-form">
             <div class="game-input-container">
@@ -68,7 +73,8 @@
                         <button onclick="nextPage()" class="btn page-btn">Next</button>
                     </div>
                 </div>
-                <button onclick="addGame()" class="btn">Add Game</button>
+                <button onclick="addGame()" class="btn"
+                data-intro="Now let's get started, add a game!" data-step="3">Add Game</button>
             </div>
             
             <div class="game-list" id="gameList">
@@ -88,9 +94,27 @@
 
         </div>
     </main>
-    <script>
-    </script>
     <script src="static/js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intro.js/minified/intro.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkTour();  // Call the checkTour function after the page is ready
+        });
+
+        function checkTour() {
+
+            if (sessionStorage.getItem('tour') === 'TRUE'){
+                startTour();
+            }
+        }
+
+        function startTour() {
+            // Your code to start the tour
+            introJs().oncomplete(function(){sessionStorage.setItem('tour', 'FALSE')}).start();
+        }
+    </script>
+
     <script>
         
 var allGames = [];

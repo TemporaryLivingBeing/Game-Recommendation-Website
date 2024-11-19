@@ -5,6 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js/minified/introjs.min.css">
 {% endblock %}
 
 {% block beginning %}  
@@ -12,8 +13,10 @@
         <a href="index" class="active stay">Home</a>
         <a href="about">About</a>
         <a href="contact">Contact</a>
-        <a href="recommendations.html">Recommendations</a>
-        <a href="javascript:void(0);" class="icon" onclick="hamburger()">
+        <a href="recommendations.html" data-intro="Here is where you can get recommendation based on a list of games"
+        data-step="3">Recommendations</a>
+        <a href="javascript:void(0);" onclick="startTour()">Tour</a>
+        <a script="javascript:void(0);" class="icon" onclick="hamburger()">
             <i class="fa fa-bars"></i>
         </a>
         <a onclick="toggleDarkMode()" class="stay" id = "darkMode"><i class="fa-solid fa-sun" id = "sunMoon"></i></a>
@@ -30,7 +33,8 @@
         </div>
         <div id = "searchBar">
             <div id="searchBarPopup">
-                <input type="text" placeholder="Game Search" id="gameSearch" oninput="showDropdown()" />
+                <input type="text" placeholder="Game Search" id="gameSearch" oninput="showDropdown()"
+                 data-intro="This is the home game recommendation search where you can get recommendation for a specific game!" data-step="1"/>
                 <div id="gameSelectIndex" style = "display: none;"></div>
             </div>
 
@@ -38,7 +42,9 @@
                 <i class="fa-solid fa-magnifying-glass"></i>  <!-- got the onclick for button from here https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
             </button>  
 
-            <button class = "seachButton" id = "filter" onclick = "openPop()"> <i class="fa-solid fa-filter"></i> </button> 
+            <button class = "seachButton" id = "filter" onclick = "openPop()"
+            data-intro="Here you can filter the recommendations based upon player base time spent" data-step="2">
+             <i class="fa-solid fa-filter"></i> </button> 
             <!-- popup https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/-->
 
             <div id="popupDialogue">
@@ -104,6 +110,40 @@
 {% endblock %}
 
 {% block script %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/intro.js/minified/intro.min.js"></script>
+<script>
+    function startTour() {
+        introJs()
+            .setOptions({
+                steps: [
+                    {
+                        intro: "Welcome to Game Fetch! Let's take a quick tour."
+                    },
+                    {
+                        element: '#gameSearch',
+                        intro: "This is the search bar for finding game recommendations!"
+                    },
+                    {
+                        element: '#filter',
+                        intro: "Here you can filter games based on various criteria."
+                    },
+                    {
+                        element: 'a[href="recommendations.html"]',
+                        intro: "Click here to explore our game recommendations!"
+                    }
+                ],
+                doneLabel: 'Go to Recommendations'
+            })
+            .oncomplete(function() {
+                sessionStorage.setItem('tour', 'TRUE');
+                window.location.replace('recommendations.html');
+            })
+            .start();
+    }
+</script>
+
     <script>
         let allGames = [];
         let filteredGames = [];
@@ -194,6 +234,7 @@
             })
             .then(function(data) {
                 // loadingIndicator.style.display = 'none';
+                console.log(78)
                 let slideshow = document.getElementsByClassName('slideshow-container')[0];
                 slideshow.style.display = 'none';
                 document.getElementById('gamesContainer').innerHTML = createGameTimeline(data.games);
