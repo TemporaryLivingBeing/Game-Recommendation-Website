@@ -5,6 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js/minified/introjs.min.css">
 {% endblock %}
 
 {% block beginning %}  
@@ -12,8 +13,10 @@
         <a href="index" class="active stay">Home</a>
         <a href="about">About</a>
         <a href="contact">Contact</a>
-        <a href="recommendations.html">Recommendations</a>
-        <a href="javascript:void(0);" class="icon" onclick="hamburger()">
+        <a href="recommendations.html" data-intro="Here is where you can get recommendation based on a list of games"
+        data-step="3">Recommendations</a>
+        <a href="javascript:void(0);" onclick="startTour()">Tour</a>
+        <a script="javascript:void(0);" class="icon" onclick="hamburger()">
             <i class="fa fa-bars"></i>
         </a>
         <a onclick="toggleDarkMode()" class="stay" id = "darkMode"><i class="fa-solid fa-sun" id = "sunMoon"></i></a>
@@ -30,20 +33,23 @@
         </div>
         <div id = "searchBar">
             <div id="searchBarPopup">
-                <input type="text" placeholder="Game Search" id="gameSearch" oninput="showDropdown()" />
+                <input type="text" placeholder="Game Search" id="gameSearch" oninput="showDropdown()"
+                 data-intro="This is the home game recommendation search where you can get recommendation for a specific game!" data-step="1"/>
                 <div id="gameSelectIndex" style = "display: none;"></div>
             </div>
 
-            <button class = "seachButton" id = "base_search" onclick = "window.location.href='recommendations.html'">
+            <button class = "seachButton" id = "base_search" onclick = "submitGames()">
                 <i class="fa-solid fa-magnifying-glass"></i>  <!-- got the onclick for button from here https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
             </button>  
 
-            <button class = "seachButton" id = "filter" onclick = "openPop()"> <i class="fa-solid fa-filter"></i> </button> 
+            <button class = "seachButton" id = "filter" onclick = "openPop()"
+            data-intro="Here you can filter the recommendations based upon player base time spent" data-step="2">
+             <i class="fa-solid fa-filter"></i> </button> 
             <!-- popup https://www.geeksforgeeks.org/how-to-open-a-popup-on-click-using-javascript/-->
 
             <div id="popupDialogue">
                 <p>
-                    <lable>Popular Tags: </lable>
+                    <label>Popular Tags: </label>
                     <select name="gameTags" id="gameTagsPopup"> <!--made using https://www.w3schools.com/tags/tag_select.asp-->
                         <option value="indie">indie</option>
                         <option value="action">action</option>
@@ -53,16 +59,16 @@
                     </select>
                 </p>
                 <p>
-                    <lable>Minimum Rating (out of 5): </lable><input type="number" min="0" max = "5" step=".1"> <!--made using https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number#-->
+                    <label>Minimum Rating (out of 5): </label><input type="number" min="0" max = "5" step=".1"> <!--made using https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number#-->
                 </p>
 
                 <p>   
-                    <lable>Minimum Active Player Base: </lable><input type="number" min="0">
+                    <label>Filter Players by Play Time: <input type="number" min="1" max ="100" id = "percent">%</label>
                 </p>
 
                 <p id = "filterButtons">
 
-                    <button onclick = "window.location.href='recommendations.html'">
+                    <button onclick = "submitGames()">
                         Search
                     </button>
                     <button onclick="openPop()">
@@ -104,6 +110,40 @@
 {% endblock %}
 
 {% block script %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/intro.js/minified/intro.min.js"></script>
+<script>
+    function startTour() {
+        introJs()
+            .setOptions({
+                steps: [
+                    {
+                        intro: "Welcome to Game Fetch! Let's take a quick tour."
+                    },
+                    {
+                        element: '#gameSearch',
+                        intro: "This is the search bar for finding game recommendations!"
+                    },
+                    {
+                        element: '#filter',
+                        intro: "Here you can filter games based on various criteria."
+                    },
+                    {
+                        element: 'a[href="recommendations.html"]',
+                        intro: "Click here to explore our game recommendations!"
+                    }
+                ],
+                doneLabel: 'Go to Recommendations'
+            })
+            .oncomplete(function() {
+                sessionStorage.setItem('tour', 'TRUE');
+                window.location.replace('recommendations.html');
+            })
+            .start();
+    }
+</script>
+
     <script>
         let allGames = [];
         let filteredGames = [];
@@ -177,7 +217,9 @@
             // var loadingIndicator = document.getElementById('loadingIndicator');
             // loadingIndicator.style.display = 'block';
             var game =  document.getElementById('gameSearch').value;
-
+            var percent = parseFloat(document.getElementById('percent').value);
+            console.log(percent)
+            console.log(typeof percent)
             fetch('get_available_games', {
                 method: 'POST',
                 headers: {
@@ -185,14 +227,15 @@
                     'Accept': 'application/json'
                 },
                 mode: 'cors',
-                body: JSON.stringify({'game' : game})
+                body: JSON.stringify({'game' : game, 'percent': percent})
             })
             .then(function(response) {
                 return response.json();
             })
             .then(function(data) {
                 // loadingIndicator.style.display = 'none';
-                let slideshow = document.getElementById('slideshow-container');
+                console.log(78)
+                let slideshow = document.getElementsByClassName('slideshow-container')[0];
                 slideshow.style.display = 'none';
                 document.getElementById('gamesContainer').innerHTML = createGameTimeline(data.games);
             });
@@ -200,8 +243,10 @@
 
         function createGameTimeline(games) {
             var html = '';
+            console.log(games);
             for (var i = 0; i < games.length; i++) {
                 var game = games[i];
+                console.log(game);
                 var sectionClass = 'timeline-section';
                 if (i % 2 === 0) {
                     sectionClass += ' left';
@@ -214,8 +259,7 @@
                         '<div class="content">' +
                             '<h2>' + game.name + '</h2>' +
                             '<p>AppID: ' + game.appid + '</p>' +
-                            '<p>Playtime: ' + Math.floor(game.playtime_forever / 60) + ' hours</p>' +
-                            '<a href="https://store.steampowered.com/app/' + game.appid + '" class="btn" target="_blank">View in Store</a>' +
+                            '<a href="/game_page/' + game.appid + '" class="btn" target="_blank">View Game Page</a>' +
                         '</div>' +
                         '<div class="image">' +
                             '<img src="https://steamcdn-a.akamaihd.net/steam/apps/' + game.appid + '/header.jpg" alt="' + game.name + ' header image">' +
