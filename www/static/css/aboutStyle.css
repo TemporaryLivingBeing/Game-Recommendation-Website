@@ -70,3 +70,7 @@ h2 {
     display: none;
     flex: 1;
 }
+
+.panel p{
+    color:black;
+}
