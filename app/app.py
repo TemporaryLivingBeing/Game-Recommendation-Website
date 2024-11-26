@@ -26,27 +26,6 @@ def create_app(test_config = False):
 
     load_data()
 
-    def find_appid(game_name):
-        url = "https://store.steampowered.com/api/storesearch"
-        params = {
-            'term': game_name,
-            'l': 'english',
-            'cc': 'US'
-        }
-
-        try:
-            response = requests.get(url, params=params)
-            response.raise_for_status()
-            data = response.json()
-
-            if data.get('total', 0) > 0:
-                return str(data['items'][0]['id'])
-            return '0'
-
-        except Exception as e:
-            print(f"Error finding AppID for {game_name}: {e}")
-            return '0'
-
     @app.route("/index")
     def index():
         return render_template('index.html')
@@ -69,7 +48,7 @@ def create_app(test_config = False):
             game_json = game_json[game_id]
         return render_template("game_page.html", game_json=game_json)
 
-    @app.route('/get_available_games', methods=['POST'])
+    @app.route('/get_available_games_index', methods=['POST'])
     def get_available_games():
         if df is None:
             load_data()
@@ -109,3 +88,24 @@ def create_app(test_config = False):
         print(x)
         return x
     return app
+
+def find_appid(game_name):
+        url = "https://store.steampowered.com/api/storesearch"
+        params = {
+            'term': game_name,
+            'l': 'english',
+            'cc': 'US'
+        }
+
+        try:
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            data = response.json()
+
+            if data.get('total', 0) > 0:
+                return str(data['items'][0]['id'])
+            return '0'
+
+        except Exception as e:
+            print(f"Error finding AppID for {game_name}: {e}")
+            return '0'
