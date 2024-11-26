@@ -36,6 +36,8 @@
                 <button type="button" class="cancel" onclick="closeForm()">Close</button>
             </form>
         </div>
+        <script>
+        </script>
 {% endblock %}
 
 {% block script %}
@@ -49,6 +51,45 @@
             form.style.display = "none";
         }
     }
+
+    window.onload = function() {
+        let i = document.getElementById("sunMoon");
+
+        if (localStorage.getItem('dark') === 'TRUE' && i.classList.contains('fa-sun')) {
+            toggleDarkMode();
+            localStorage.setItem('dark', 'TRUE')
+        } 
+    };
+
+    function toggleDarkMode() {
+        let i = document.getElementById("sunMoon");
+        
+        if (i.classList.contains('fa-sun')) {
+            i.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            i.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        let element = document.body;
+        element.classList.toggle("dark");
+
+        let contactBox = document.querySelector(".contact-us-box");
+        contactBox.classList.toggle("dark");
+
+        let contactBoxButton = contactBox.querySelector("button");
+        contactBoxButton.classList.toggle("dark");
+
+        let closeButton = contactBox.querySelector(".contact-us-box button.cancel");
+        closeButton.classList.toggle("dark");
+
+        if (localStorage.getItem('dark') === 'TRUE') {
+        localStorage.setItem('dark', 'FALSE');
+        } else {
+        localStorage.setItem('dark', 'TRUE');
+        }   
+        console.log(localStorage.getItem('dark')); 
+    }
+
 
     function closeForm() {
         document.getElementById("contactForm").style.display = "none";
