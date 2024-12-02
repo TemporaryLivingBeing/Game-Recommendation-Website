@@ -143,6 +143,16 @@
             })
             .start();
     }
+
+    window.onload = function() {
+        let i = document.getElementById("sunMoon");
+
+        if (localStorage.getItem('dark') === 'TRUE' && i.classList.contains('fa-sun')) {
+            toggleDarkMode();
+            localStorage.setItem('dark', 'TRUE')
+        } 
+        showSlides(1);
+    };
 </script>
 
     <script>

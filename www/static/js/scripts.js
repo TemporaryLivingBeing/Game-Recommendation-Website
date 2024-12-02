@@ -10,15 +10,12 @@ function toggleDarkMode() {
     let element = document.body;
     element.classList.toggle("dark");
 
-    let contactBox = document.querySelector(".contact-us-box");
-    contactBox.classList.toggle("dark");
-
-
-    let contactBoxButton = contactBox.querySelector("button");
-    contactBoxButton.classList.toggle("dark");
-
-    let closeButton = contactBox.querySelector(".contact-us-box button.cancel");
-    closeButton.classList.toggle("dark");
+    if (localStorage.getItem('dark') === 'TRUE') {
+      localStorage.setItem('dark', 'FALSE');
+    } else {
+      localStorage.setItem('dark', 'TRUE');
+    }   
+    console.log(localStorage.getItem('dark')); 
   }
 
 function hamburger() {
@@ -72,9 +69,6 @@ function openPop() {             /* popup https://www.geeksforgeeks.org/how-to-o
 }
 
 let slideIndex = 1;
-window.onload = function(){
-    showSlides(slideIndex);
-}
 
 //gotten fromhttps://www.w3schools.com/howto/howto_js_slideshow.asp
 
