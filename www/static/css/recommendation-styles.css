@@ -337,3 +337,7 @@ option:hover {
         font-size: 20px;
     }
 }
+
+.game-item{
+    color: black;
+}

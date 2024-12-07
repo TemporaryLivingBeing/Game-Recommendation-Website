@@ -2,18 +2,6 @@ from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_cors import CORS
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
-<<<<<<< HEAD
-
-app = Flask(__name__)
-
-@app.route("/index")
-def index():
-    return render_template('index.html')
-
-@app.route("/about")
-def about():
-    return render_template('about.html')
-=======
 import os
 import requests
 import json
@@ -49,23 +37,9 @@ def create_app(test_config=False):
         df = df.drop(columns=['0', 'purchase'])
         df = df[df['hours'] >= MIN_HOURS_THRESHOLD]
         print(df.head())
->>>>>>> 28d602a (Added databases and merged all .py files into app.py Fixes:#38, Fixes:#35)
 
-@app.route("/contact")
-def contact():
-    return render_template('contact.html')
+    load_data()
 
-<<<<<<< HEAD
-@app.route("/game_page/<game_id>")
-def create_game_page(game_id):
-    with open('/app/files/game_details_complete.json', 'r') as file:
-        game_json = json.load(file)    
-    if game_id not in game_json.keys():
-        game_json = {}
-    else:
-        game_json = game_json[game_id]
-    return render_template("game_page.html", game_json=game_json)
-=======
     @app.route('/')
     def index():
         return send_from_directory('../www', 'rec.html')
@@ -73,37 +47,15 @@ def create_game_page(game_id):
     @app.route("/index")
     def main_index():
         return render_template('index.html')
->>>>>>> 28d602a (Added databases and merged all .py files into app.py Fixes:#38, Fixes:#35)
 
-df = None
-MIN_HOURS_THRESHOLD = 15
+    @app.route("/about")
+    def about():
+        return render_template('about.html')
 
-def load_data():
-    global df
-    df = pd.read_csv(
-        'files/steam-200k.csv', 
-        header=None,
-        names=['user', 'game', 'purchase', 'hours', '0'],
-        quotechar='"',
-    )
-    df = df.drop(columns=['0', 'purchase'])
-    df = df[df['hours'] >= MIN_HOURS_THRESHOLD]
+    @app.route("/contact")
+    def contact():
+        return render_template('contact.html')
 
-<<<<<<< HEAD
-@app.route('/get_available_games', methods=['GET'])
-def get_available_games():
-    if df is None:
-        load_data()
-    # valid_games = df[df['hours'] >= MIN_HOURS_THRESHOLD]['game'].unique()
-    game_request = request.json.get('game')
-    hours_percent = df[df['game'] == game_request]['hour'].quantile(0.7)
-    gamers = df[df[df['game'] == game_request]['hours'] > hours_percent]
-    # gamers[gamers['game'] != game_request][]
-    # return jsonify({'games': sorted(valid_games.tolist())})
-
-if __name__ == "__main__":
-    app.run(debug=True)
-=======
     @app.route('/saveMessage', methods=['POST'])
     def save_message():
         data = request.get_json()
@@ -323,4 +275,3 @@ def find_appid(game_name):
     except Exception as e:
         print(f"Error finding AppID for {game_name}: {e}")
         return '0'
->>>>>>> 28d602a (Added databases and merged all .py files into app.py Fixes:#38, Fixes:#35)
