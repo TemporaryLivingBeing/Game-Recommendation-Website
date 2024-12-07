@@ -271,7 +271,7 @@ function submitGames() {
     var loadingIndicator = document.getElementById('loadingIndicator');
     loadingIndicator.style.display = 'block';
 
-    fetch('https://www.emirhangencer.com/Projects/game-recommendations/rec/get_recommendations', {
+    fetch('/get_recommendations', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
