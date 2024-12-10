@@ -51,17 +51,33 @@
                     <p>
                         <label>Popular Tags: </label>
                         <select name="gameTags" id="gameTagsPopup"> <!--made using https://www.w3schools.com/tags/tag_select.asp-->
-                            <option value="indie">indie</option>
-                            <option value="action">action</option>
-                            <option value="adventure">adventure</option>
-                            <option value="casual">casual</option>
-                            <option value="RPG">RPG</option>
-                        </select>
+                            <option value=""></option>
+                            <option value="movie">Movie</option>
+                            <option value="design_illustration">Design & Illustration</option>
+                            <option value="adventure">Adventure</option>
+                            <option value="animation_modeling">Animation & Modeling</option>
+                            <option value="rpg">RPG</option>
+                            <option value="web_publishing">Web Publishing</option>
+                            <option value="sports">Sports</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="strategy">Strategy</option>
+                            <option value="massively_multiplayer">Massively Multiplayer</option>
+                            <option value="action">Action</option>
+                            <option value="game_development">Game Development</option>
+                            <option value="audio_production">Audio Production</option>
+                            <option value="gore">Gore</option>
+                            <option value="education">Education</option>
+                            <option value="simulation">Simulation</option>
+                            <option value="software_training">Software Training</option>
+                            <option value="free_to_play">Free To Play</option>
+                            <option value="racing">Racing</option>
+                            <option value="video_production">Video Production</option>
+                            <option value="violent">Violent</option>
+                            <option value="indie">Indie</option>
+                            <option value="early_access">Early Access</option>
+                            <option value="casual">Casual</option>
+                        </select>                        
                     </p>
-                    <p>
-                        <label>Minimum Rating (out of 5): </label><input type="number" min="0" max = "5" step=".1"> <!--made using https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number#-->
-                    </p>
-
                     <p>   
                         <label>Filter Players by Play Time: <input type="number" min="1" max ="100" id = "percent">%</label>
                     </p>
@@ -229,8 +245,9 @@
             // loadingIndicator.style.display = 'block';
             var game =  document.getElementById('gameSearch').value;
             var percent = parseFloat(document.getElementById('percent').value);
-            console.log(percent)
-            console.log(typeof percent)
+            var gameTags = document.getElementById('gameTagsPopup').value;
+            console.log(JSON.stringify({'game' : game, 'percent': percent, 'tags': gameTags}));
+            
             fetch('get_available_games_index', {
                 method: 'POST',
                 headers: {
@@ -238,17 +255,22 @@
                     'Accept': 'application/json'
                 },
                 mode: 'cors',
-                body: JSON.stringify({'game' : game, 'percent': percent})
+                body: JSON.stringify({'game' : game, 'percent': percent, 'tags': gameTags})
             })
             .then(function(response) {
                 return response.json();
             })
             .then(function(data) {
                 // loadingIndicator.style.display = 'none';
-                console.log(78)
-                let slideshow = document.getElementsByClassName('slideshow-container')[0];
-                slideshow.style.display = 'none';
-                document.getElementById('gamesContainer').innerHTML = createGameTimeline(data.games);
+                if (data.games.length === 0) {
+                    console.log('pop');
+                    window.alert("There are no similar games meeting that requirement. Sorry :(");
+                }
+                else{
+                    let slideshow = document.getElementsByClassName('slideshow-container')[0];
+                    slideshow.style.display = 'none';
+                    document.getElementById('gamesContainer').innerHTML = createGameTimeline(data.games);
+                }
             });
         }
 

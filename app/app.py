@@ -36,7 +36,7 @@ def create_app(test_config=False):
                         quotechar='"')
         df = df.drop(columns=['0', 'purchase'])
         df = df[df['hours'] >= MIN_HOURS_THRESHOLD]
-        print(df.head())
+        # print(df.head())
 
     load_data()
 
@@ -205,11 +205,14 @@ def create_app(test_config=False):
             load_data()
         game_request = request.json.get('game')
         percent = request.json.get('percent')
+        tags = request.json.get('tags')
         if percent == None:
             percent = .7
         else:
             percent = percent/100
-
+        if tags == "":
+            tags = None
+        
         if not game_request:
             return jsonify({'error': 'No games provided'}), 400
 
@@ -236,21 +239,37 @@ def create_app(test_config=False):
         games_data = []
         
         for game in top_games:
-            cursor.execute('SELECT name, steam_appid FROM games WHERE name LIKE ?', (f'%{game}%',))
+            cursor.execute("SELECT name, steam_appid, genres FROM games WHERE name LIKE ?", (f"%{game}%",))
             result = cursor.fetchone()
-            if result:
-                games_data.append({
-                    'name': result['name'],
-                    'appid': result['steam_appid']
-                })
+            if tags:
+                if result:
+                    if tags.lower() in result['genres'].lower():
+                        games_data.append({
+                            'name': result['name'],
+                            'appid': result['steam_appid']
+                        })
+                else:
+                    appid = find_appid(game)
+                    games_data.append({
+                        'name': game,
+                        'appid': appid
+                    })
+            
             else:
-                appid = find_appid(game)
-                games_data.append({
-                    'name': game,
-                    'appid': appid
-                })
+                if result:
+                    games_data.append({
+                        'name': result['name'],
+                        'appid': result['steam_appid']
+                    })
+                else:
+                    appid = find_appid(game)
+                    games_data.append({
+                        'name': game,
+                        'appid': appid
+                    })
         
         conn.close()
+        print()
         return jsonify({'games': games_data})
 
     return app
