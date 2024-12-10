@@ -102,9 +102,9 @@ input[type=text] {
   justify-content: space-evenly;
 }
 
-/* 
-#mainImage {
-  position: 
+
+/* #mainImage {
+  position: relative;
   z-index: -1; 
   top: 0;
   left: 0;
