@@ -1,7 +1,7 @@
 {% extends "base_template.html" %}
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/gamePage.css') }}"> 
+    <link rel="stylesheet" href="{{ prepend }} + 'static', filename='css/gamePage.css'"> 
     <!-- solution given by chatGPT -->
 {% endblock %}
 
