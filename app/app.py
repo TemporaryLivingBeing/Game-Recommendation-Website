@@ -12,11 +12,16 @@ from datetime import datetime
 MIN_HOURS_THRESHOLD = 15
 df = None
 
-def create_app(test_config=False):
+def create_app(test_config = False, shared_server = False):
     app = Flask(__name__, 
                 static_folder='../www/static',
                 template_folder='templates')
     app.config['TESTING'] = test_config
+    app.config['SHARED_SERVER'] = shared_server
+
+    prepend = ''
+    if app.config['SHARED_SERVER']:
+        prepend = '/gamefetch'
 
     basedir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     DATABASE = os.path.join(basedir, 'databases', 'database.db')
@@ -40,23 +45,23 @@ def create_app(test_config=False):
 
     load_data()
 
-    @app.route('/')
+    @app.route(prepend + '/')
     def index():
         return send_from_directory('../www', 'rec.html')
 
-    @app.route("/index")
+    @app.route(prepend + "/index")
     def main_index():
-        return render_template('index.html')
+        return render_template('index.html', prepend=prepend)
 
-    @app.route("/about")
+    @app.route(prepend + "/about")
     def about():
-        return render_template('about.html')
+        return render_template('about.html', prepend=prepend)
 
-    @app.route("/contact")
+    @app.route(prepend + "/contact")
     def contact():
-        return render_template('contact.html')
+        return render_template('contact.html', prepend=prepend)
 
-    @app.route('/saveMessage', methods=['POST'])
+    @app.route(prepend + '/saveMessage', methods=['POST'])
     def save_message():
         data = request.get_json()
         
@@ -83,7 +88,7 @@ def create_app(test_config=False):
             ])
         return jsonify({'message': 'Contact saved successfully'}), 200
 
-    @app.route('/get_recommendations', methods=['POST'])
+    @app.route(prepend + '/get_recommendations', methods=['POST'])
     def recommend_games():
         user_games = request.json
         if not user_games:
@@ -160,7 +165,7 @@ def create_app(test_config=False):
             'playtime_forever': int(row['hours'] * 60)
         } for _, row in recommendations.iterrows()]})
 
-    @app.route('/get_games_list')
+    @app.route(prepend + '/get_games_list')
     def get_games_list():
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -169,7 +174,7 @@ def create_app(test_config=False):
         conn.close()
         return jsonify([dict(game) for game in games])
 
-    @app.route("/game_page/<game_id>")
+    @app.route(prepend + "/game_page/<game_id>")
     def create_game_page(game_id):
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -190,16 +195,16 @@ def create_app(test_config=False):
             else:
                 game_json = game_json[game_id]
         
-        return render_template("game_page.html", game_json=game_json)
+        return render_template("game_page.html", game_json=game_json, prepend=prepend)
 
-    @app.route('/get_available_games', methods=['GET'])
+    @app.route(prepend + '/get_available_games', methods=['GET'])
     def get_available_games():
         if df is None:
             load_data()
         valid_games = df[df['hours'] >= MIN_HOURS_THRESHOLD]['game'].unique()
         return jsonify({'games': sorted(valid_games.tolist())})
 
-    @app.route('/get_available_games_index', methods=['POST'])
+    @app.route(prepend +  '/get_available_games_index', methods=['POST'])
     def get_available_games_index():
         if df is None:
             load_data()
