@@ -7,9 +7,9 @@
 p {
     font-size: 18px;
 }
-html {
+/* html { 
     background-color: #141619;
-}
+} */
 h1, h2 {
     font-family: "EB Garamond", serif;
     font-optical-sizing: auto;
@@ -34,7 +34,7 @@ h1, h2 {
     padding: 1px;
     margin: 5px;
     color: #eceeff;
-    border: solid 3px black;
+    /* border: solid 3px black; */
 }
 .innerBox {
     background-color: #B3B4BD;
